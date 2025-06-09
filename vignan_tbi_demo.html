@@ -122,14 +122,207 @@
             text-decoration: underline;
             cursor: pointer;
         }
-        /* Make staff dashboard wider */
-        #staff-dashboard.container-card {
-            max-width: 95%; /* Adjust for larger content */
-            padding: 1.5rem;
+        /* Dashboard Container Styling for Sidebar Layout */
+        .dashboard-container {
+            width: 100%;
+            height: 90vh; /* Adjust height to fit screen better */
+            max-height: 900px; /* Max height for larger screens */
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            display: flex; /* Use flex for sidebar and main content */
+            overflow: hidden; /* Hide overflow of content */
         }
-        @media (min-width: 1024px) {
-            #staff-dashboard.container-card {
-                max-width: 1200px; /* Even wider on large screens */
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 250px; /* Fixed width for sidebar */
+            background-color: #2D3748; /* Dark gray for sidebar */
+            color: #E2E8F0;
+            padding: 1.5rem;
+            flex-shrink: 0; /* Prevent sidebar from shrinking */
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .sidebar-item:hover {
+            background-color: #4A5568; /* Darker gray on hover */
+        }
+        .sidebar-item.active {
+            background-color: #00A6FB; /* Active item color */
+            font-weight: 600;
+        }
+        .sidebar-item-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            color: #CBD5E0;
+        }
+        .sidebar-item.active .sidebar-item-icon {
+            color: #ffffff;
+        }
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .sidebar-logo {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        .sidebar-role {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #9ECFFB; /* Lighter blue */
+        }
+        .sidebar-welcome {
+            font-size: 1rem;
+            color: #CBD5E0;
+            margin-top: 0.25rem;
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            flex-grow: 1; /* Allow main content to take remaining space */
+            padding: 2rem;
+            overflow-y: auto; /* Enable scrolling for main content */
+            background-color: #F8FAFC; /* Slightly different background for content */
+        }
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #4A5568;
+            font-size: 0.9rem;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #E2E8F0;
+            border-radius: 0.5rem;
+            background-color: white;
+            font-size: 0.9rem;
+            color: #4A5568;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .form-group input[type="text"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00A6FB;
+            box-shadow: 0 0 0 3px rgba(0, 166, 251, 0.2);
+        }
+        .form-checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        .form-checkbox-group input[type="checkbox"] {
+            margin-right: 0.5rem;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #CBD5E0;
+            border-radius: 4px;
+            cursor: pointer;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .form-checkbox-group label {
+            margin-bottom: 0; /* Override default label margin */
+            font-weight: 500;
+            color: #4A5568;
+            cursor: pointer;
+        }
+
+        /* Mobile specific adjustments for sidebar */
+        .sidebar-mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+            display: none; /* Hidden by default */
+            justify-content: flex-start; /* Sidebar comes from left */
+        }
+        .sidebar-mobile-overlay.active {
+            display: flex;
+        }
+        .sidebar-mobile-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 60;
+        }
+        /* Mobile hamburger menu button */
+        .hamburger-menu {
+            display: block; /* Always show on mobile */
+            cursor: pointer;
+            background-color: #00A6FB; /* Blue background */
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10; /* Ensure it's above the card */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        @media (min-width: 768px) {
+            .hamburger-menu {
+                display: none; /* Hide on desktop */
+            }
+            .sidebar {
+                display: flex; /* Always visible on desktop */
+            }
+        }
+        @media (max-width: 767px) {
+            .sidebar {
+                display: none; /* Hide sidebar by default on mobile */
+            }
+            .dashboard-container {
+                max-width: 95%; /* Adjust width for better mobile fit */
+                height: 90vh; /* Allow it to take more height on small screens */
+            }
+            .main-content-area {
+                padding: 1rem; /* Smaller padding on mobile */
+            }
+            /* Make staff dashboard wider on mobile too, but ensure scrollability */
+            #staff-dashboard.dashboard-container {
+                max-width: 100%;
+                height: 95vh; /* Maximize height on mobile */
+            }
+            /* Make startup-dashboard wider on mobile for forms */
+            #startup-dashboard.dashboard-container {
+                max-width: 100%;
+                height: 95vh;
             }
         }
     </style>
@@ -185,129 +378,612 @@
     </div>
 
     <!-- Student Dashboard (This is the third "page") -->
-    <div id="student-dashboard" class="container-card hidden">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Student Dashboard</h1>
-            <button id="student-logout-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Logout</button>
+    <div id="student-dashboard" class="dashboard-container hidden">
+        <!-- Sidebar -->
+        <div class="sidebar md:flex hidden" id="student-sidebar">
+            <div class="sidebar-header">
+                <img src="tbi%20logo.jpeg" alt="TBI Logo" class="sidebar-logo mx-auto">
+                <div class="sidebar-role">Student</div>
+                <div class="sidebar-welcome" id="student-sidebar-welcome">Welcome, Sohaib!</div>
+            </div>
+            <nav class="flex-grow">
+                <ul>
+                    <li id="student-sidebar-dashboard" class="sidebar-item active" data-content-id="student-content-dashboard">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        Dashboard
+                    </li>
+                    <li id="student-sidebar-profile" class="sidebar-item" data-content-id="student-content-profile">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        My Profile
+                    </li>
+                    <li id="student-sidebar-membership" class="sidebar-item" data-content-id="student-content-membership">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 002-2V4H4zm10 10h2a2 2 0 002-2v-3.586l.293.293a1 1 0 001.414-1.414L15.414 6H14v6.586l.293.293a1 1 0 001.414-1.414L16.414 6H14V4H6v2H4v4h9l-1 1H4a2 2 0 00-2 2v4a2 2 0 002 2h10a2 2 0 002-2v-4h-2V14z" clip-rule="evenodd"></path></svg>
+                        Membership
+                    </li>
+                    <li id="student-sidebar-updates" class="sidebar-item" data-content-id="student-content-updates">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 012 14v2a1 1 0 001 1h14a1 1 0 001-1v-2a1 1 0 01-.293-.707L16 11.586V8a6 6 0 00-6-6zm-6 8.414V14h12V8.414l.293-.293A1 1 0 0017 11v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L4 10.414z"></path></svg>
+                        Updates
+                    </li>
+                    <li id="student-sidebar-internships" class="sidebar-item" data-content-id="student-content-internships">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.586l.293.293A1 1 0 0017 14v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L2 10.586V8a2 2 0 012-2h2zm2-2V5a1 1 0 00-1-1H9a1 1 0 00-1 1v1h4V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v1H8zm11 3.586V8a2 2 0 00-2-2h-2v3h-4V6H8v2H4a2 2 0 00-2 2v4a2 2 0 002 2h12a2 2 0 002-2v-3.586z" clip-rule="evenodd"></path></svg>
+                        Internships
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-auto">
+                <button id="student-logout-btn" class="sidebar-item w-full justify-center bg-red-600 hover:bg-red-700 text-white">
+                    <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H5v2a1 1 0 01-2 0V3zm9.3 8.7a1 1 0 001.4-1.4L10 7.586l-3.707 3.707a1 1 0 001.414 1.414L9 10.414V17a1 1 0 102 0V10.414l1.293 1.293z" clip-rule="evenodd"></path></svg>
+                    Logout
+                </button>
+            </div>
         </div>
-        
-        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
-
-        <h2 class="text-xl font-semibold mb-4 text-gray-700">Welcome, Sohaib!</h2>
-
-        <div class="text-left mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <p class="font-medium text-lg text-blue-700 mb-2">Membership Status:</p>
-            <p class="membership-status">Active</p>
-            <p class="text-sm text-gray-600 mt-1">Valid Until: 31 December, 2025</p>
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-mobile-overlay" id="student-sidebar-mobile-overlay">
+            <div class="sidebar" style="width: 250px;">
+                <span class="sidebar-mobile-close" id="student-sidebar-close">&times;</span>
+                <div class="sidebar-header">
+                    <img src="tbi%20logo.jpeg" alt="TBI Logo" class="sidebar-logo mx-auto">
+                    <div class="sidebar-role">Student</div>
+                    <div class="sidebar-welcome" id="student-sidebar-welcome-mobile">Welcome, Sohaib!</div>
+                </div>
+                <nav class="flex-grow">
+                    <ul>
+                        <li class="sidebar-item active" data-content-id="student-content-dashboard">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            Dashboard
+                        </li>
+                        <li class="sidebar-item" data-content-id="student-content-profile">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                            My Profile
+                        </li>
+                        <li class="sidebar-item" data-content-id="student-content-membership">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 002-2V4H4zm10 10h2a2 2 0 002-2v-3.586l.293.293a1 1 0 001.414-1.414L15.414 6H14v6.586l.293.293a1 1 0 001.414-1.414L16.414 6H14V4H6v2H4v4h9l-1 1H4a2 2 0 00-2 2v4a2 2 0 002 2h10a2 2 0 002-2v-4h-2V14z" clip-rule="evenodd"></path></svg>
+                            Membership
+                        </li>
+                        <li class="sidebar-item" data-content-id="student-content-updates">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 012 14v2a1 1 0 001 1h14a1 1 0 001-1v-2a1 1 0 01-.293-.707L16 11.586V8a6 6 0 00-6-6zm-6 8.414V14h12V8.414l.293-.293A1 1 0 0017 11v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L4 10.414z"></path></svg>
+                            Updates
+                        </li>
+                        <li class="sidebar-item" data-content-id="student-content-internships">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.586l.293.293A1 1 0 0017 14v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L2 10.586V8a2 2 0 012-2h2zm2-2V5a1 1 0 00-1-1H9a1 1 0 00-1 1v1h4V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v1H8zm11 3.586V8a2 2 0 00-2-2h-2v3h-4V6H8v2H4a2 2 0 00-2 2v4a2 2 0 002 2h12a2 2 0 002-2v-3.586z" clip-rule="evenodd"></path></svg>
+                            Internships
+                        </li>
+                    </ul>
+                </nav>
+                <div class="mt-auto">
+                    <button id="student-logout-btn-mobile" class="sidebar-item w-full justify-center bg-red-600 hover:bg-red-700 text-white">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H5v2a1 1 0 01-2 0V3zm9.3 8.7a1 1 0 001.4-1.4L10 7.586l-3.707 3.707a1 1 0 001.414 1.414L9 10.414V17a1 1 0 102 0V10.414l1.293 1.293z" clip-rule="evenodd"></path></svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
+        <!-- Main Content for Student Dashboard -->
+        <div class="main-content-area relative">
+             <button id="student-hamburger-menu" class="hamburger-menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            <div class="flex justify-between items-center mb-6">
+                <h1 id="student-main-title" class="text-2xl font-bold text-gray-800">Student Dashboard</h1>
+                <button id="student-logout-btn-desktop" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm hidden md:block">Logout</button>
+            </div>
+            
+            <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
 
-        <div class="text-left mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-            <p class="font-medium text-lg text-gray-700 mb-2">Student Data:</p>
-            <p class="text-base text-gray-600">Department: Computer Science Engineering</p>
-            <p class="text-base text-gray-600">Batch: 2026</p>
-            <p class="text-base text-gray-600">Enrollment ID: VBIT-CSE-202301</p>
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Welcome, Sohaib!</h2>
+
+            <!-- Student Content Sections -->
+            <div id="student-content-dashboard">
+                <div class="text-left mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                    <p class="font-medium text-lg text-blue-700 mb-2">Membership Status:</p>
+                    <p class="membership-status">Active</p>
+                    <p class="text-sm text-gray-600 mt-1">Valid Until: 31 December, 2025</p>
+                </div>
+
+                <div class="text-left mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <p class="font-medium text-lg text-gray-700 mb-2">Student Data:</p>
+                    <p class="text-base text-gray-600">Department: Computer Science Engineering</p>
+                    <p class="text-base text-gray-600">Batch: 2026</p>
+                    <p class="text-base text-gray-600">Enrollment ID: VBIT-CSE-202301</p>
+                </div>
+
+                <button class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-primary btn-hover transition duration-300">
+                    View Program Updates
+                </button>
+                <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-secondary btn-hover transition duration-300">
+                    Explore Internship Opportunities
+                </button>
+            </div>
+
+            <div id="student-content-profile" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">My Profile:</h3>
+                <p class="text-gray-600">Placeholder for student profile details and editing options.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: fields for name, contact, academic info, edit button)*</p>
+            </div>
+            <div id="student-content-membership" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Membership Details:</h3>
+                <p class="text-gray-600">Comprehensive view of membership history and benefits.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: detailed membership history, perks, renewal options)*</p>
+            </div>
+            <div id="student-content-updates" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Program & TBI Updates:</h3>
+                <p class="text-gray-600">Latest announcements from NASSCOM, Cisco ThingQbator, and Vignan TBI.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: news feed, event calendar)*</p>
+            </div>
+            <div id="student-content-internships" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Internship Opportunities:</h3>
+                <p class="text-gray-600">List of available internships from TBI startups and partners.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: searchable list, application forms, status tracking)*</p>
+            </div>
+
+
+            <button id="download-student-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+                Download Screenshot
+            </button>
         </div>
-
-        <button class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-primary btn-hover transition duration-300">
-            View Program Updates
-        </button>
-        <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-secondary btn-hover transition duration-300">
-            Explore Internship Opportunities
-        </button>
-
-        <button id="download-student-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
-            Download Screenshot
-        </button>
     </div>
 
     <!-- Startup Dashboard (This is the third "page") -->
-    <div id="startup-dashboard" class="container-card hidden">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Startup Dashboard</h1>
-            <button id="startup-logout-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Logout</button>
+    <div id="startup-dashboard" class="dashboard-container hidden">
+        <!-- Sidebar -->
+        <div class="sidebar md:flex hidden" id="startup-sidebar">
+            <div class="sidebar-header">
+                <img src="tbi%20logo.jpeg" alt="TBI Logo" class="sidebar-logo mx-auto">
+                <div class="sidebar-role">Startup</div>
+                <div class="sidebar-welcome" id="startup-sidebar-welcome">Welcome, Andhra Angels!</div>
+            </div>
+            <nav class="flex-grow">
+                <ul>
+                    <li id="startup-sidebar-dashboard" class="sidebar-item active" data-content-id="startup-content-dashboard">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        Dashboard
+                    </li>
+                    <li id="startup-sidebar-details" class="sidebar-item" data-content-id="startup-content-details">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                        Startup Details
+                    </li>
+                    <li id="startup-sidebar-manage-details" class="sidebar-item" data-content-id="startup-content-manage-details">
+                         <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 4.09A1 1 0 1010.51 5.91 1 1 0 0011.49 4.09zM4.09 11.49A1 1 0 105.91 10.51 1 1 0 004.09 11.49zM15.91 11.49A1 1 0 1014.09 10.51 1 1 0 0015.91 11.49zM10.51 15.91A1 1 0 1011.49 14.09 1 1 0 0010.51 15.91zM7 7.5a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2zm-3 6a1 1 0 100-2 1 1 0 000 2zM7 12.5a1 1 0 100-2 1 1 0 000 2zM13 12.5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                        Manage Details
+                    </li>
+                    <li id="startup-sidebar-funding" class="sidebar-item" data-content-id="startup-content-funding">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 012 14v2a1 1 0 001 1h14a1 1 0 001-1v-2a1 1 0 01-.293-.707L16 11.586V8a6 6 0 00-6-6zm-6 8.414V14h12V8.414l.293-.293A1 1 0 0017 11v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L4 10.414z"></path></svg>
+                        Funding
+                    </li>
+                    <li id="startup-sidebar-rent" class="sidebar-item" data-content-id="startup-content-rent">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                        Rent & Dues
+                    </li>
+                    <li id="startup-sidebar-agreements" class="sidebar-item" data-content-id="startup-content-agreements">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                        Agreements
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-auto">
+                <button id="startup-logout-btn" class="sidebar-item w-full justify-center bg-red-600 hover:bg-red-700 text-white">
+                    <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H5v2a1 1 0 01-2 0V3zm9.3 8.7a1 1 0 001.4-1.4L10 7.586l-3.707 3.707a1 1 0 001.414 1.414L9 10.414V17a1 1 0 102 0V10.414l1.293 1.293z" clip-rule="evenodd"></path></svg>
+                    Logout
+                </button>
+            </div>
         </div>
-        
-        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
-
-        <h2 class="text-xl font-semibold mb-4 text-gray-700">Welcome, Andhra Angels!</h2>
-
-        <div class="text-left mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
-            <p class="font-medium text-lg text-green-700 mb-2">Startup Details:</p>
-            <p class="text-base text-gray-600">Industry: Agri-Tech Solutions</p>
-            <p class="text-base text-gray-600">Founded: October 2023</p>
-            <p class="text-base text-gray-600">Team Size: 5</p>
-            <p class="text-base text-gray-600">Incubation Manager: Abdul Riyaz</p>
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-mobile-overlay" id="startup-sidebar-mobile-overlay">
+            <div class="sidebar" style="width: 250px;">
+                <span class="sidebar-mobile-close" id="startup-sidebar-close">&times;</span>
+                <div class="sidebar-header">
+                    <img src="tbi%20logo.jpeg" alt="TBI Logo" class="sidebar-logo mx-auto">
+                    <div class="sidebar-role">Startup</div>
+                    <div class="sidebar-welcome" id="startup-sidebar-welcome-mobile">Welcome, Andhra Angels!</div>
+                </div>
+                <nav class="flex-grow">
+                    <ul>
+                        <li class="sidebar-item active" data-content-id="startup-content-dashboard">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            Dashboard
+                        </li>
+                        <li class="sidebar-item" data-content-id="startup-content-details">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                            Startup Details
+                        </li>
+                        <li class="sidebar-item" data-content-id="startup-content-manage-details">
+                             <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 4.09A1 1 0 1010.51 5.91 1 1 0 0011.49 4.09zM4.09 11.49A1 1 0 105.91 10.51 1 1 0 004.09 11.49zM15.91 11.49A1 1 0 1014.09 10.51 1 1 0 0015.91 11.49zM10.51 15.91A1 1 0 1011.49 14.09 1 1 0 0010.51 15.91zM7 7.5a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2zm-3 6a1 1 0 100-2 1 1 0 000 2zM7 12.5a1 1 0 100-2 1 1 0 000 2zM13 12.5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                            Manage Details
+                        </li>
+                        <li class="sidebar-item" data-content-id="startup-content-funding">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 012 14v2a1 1 0 001 1h14a1 1 0 001-1v-2a1 1 0 01-.293-.707L16 11.586V8a6 6 0 00-6-6zm-6 8.414V14h12V8.414l.293-.293A1 1 0 0017 11v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L4 10.414z"></path></svg>
+                            Funding
+                        </li>
+                        <li class="sidebar-item" data-content-id="startup-content-rent">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                            Rent & Dues
+                        </li>
+                        <li class="sidebar-item" data-content-id="startup-content-agreements">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                            Agreements
+                        </li>
+                    </ul>
+                </nav>
+                <div class="mt-auto">
+                    <button id="startup-logout-btn-mobile" class="sidebar-item w-full justify-center bg-red-600 hover:bg-red-700 text-white">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H5v2a1 1 0 01-2 0V3zm9.3 8.7a1 1 0 001.4-1.4L10 7.586l-3.707 3.707a1 1 0 001.414 1.414L9 10.414V17a1 1 0 102 0V10.414l1.293 1.293z" clip-rule="evenodd"></path></svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
+        <!-- Main Content for Startup Dashboard -->
+        <div class="main-content-area relative">
+            <button id="startup-hamburger-menu" class="hamburger-menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            <div class="flex justify-between items-center mb-6">
+                <h1 id="startup-main-title" class="text-2xl font-bold text-gray-800">Startup Dashboard</h1>
+                <button id="startup-logout-btn-desktop" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm hidden md:block">Logout</button>
+            </div>
+            
+            <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
 
-        <div class="text-left mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-            <p class="font-medium text-lg text-yellow-700 mb-2">Funding Overview:</p>
-            <p class="text-base text-gray-600">TBI Seed Fund Received: <span class="funding-amount text-yellow-800">₹10 Lakhs</span></p>
-            <p class="text-base text-gray-600">Other Funds Secured: <span class="funding-amount text-yellow-800">₹5 Lakhs</span></p>
+            <h2 id="startup-welcome-message" class="text-xl font-semibold mb-4 text-gray-700">Welcome, Andhra Angels!</h2>
+
+            <!-- Startup Content Sections -->
+            <div id="startup-content-dashboard">
+                <div class="text-left mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+                    <p class="font-medium text-lg text-green-700 mb-2">Startup Details Summary:</p>
+                    <p class="text-base text-gray-600">Industry: Agri-Tech Solutions</p>
+                    <p class="text-base text-gray-600">Founded: October 2023</p>
+                    <p class="text-base text-gray-600">Team Size: 5</p>
+                    <p class="text-base text-gray-600">Incubation Manager: Abdul Riyaz</p>
+                </div>
+
+                <div class="text-left mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="font-medium text-lg text-yellow-700 mb-2">Funding Overview:</p>
+                    <p class="text-base text-gray-600">TBI Seed Fund Received: <span class="funding-amount text-yellow-800">₹10 Lakhs</span></p>
+                    <p class="text-base text-gray-600">Other Funds Secured: <span class="funding-amount text-yellow-800">₹5 Lakhs</span></p>
+                </div>
+
+                <button class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-secondary btn-hover transition duration-300">
+                    Apply for More Funding
+                </button>
+                <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-primary btn-hover transition duration-300">
+                    Manage Rent & Dues
+                </button>
+                <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-accent btn-hover transition duration-300">
+                    View Signed Agreements
+                </button>
+            </div>
+            
+            <div id="startup-content-details" class="hidden">
+                 <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Detailed Startup Profile:</h3>
+                 <p class="text-gray-600">Detailed static view of startup data.</p>
+                 <ul class="list-disc list-inside text-gray-600 mt-2 text-left">
+                     <li>**Regd. Name:** Andhra Angels AgriTech Innovations Pvt. Ltd.</li>
+                     <li>**Type:** Physical</li>
+                     <li>**Website:** <a href="https://andhraangels.in" target="_blank" class="document-link">andhraangels.in</a></li>
+                     <li>**CIN:** U01110AP2022PTC098765</li>
+                     <li>**Date of CIN:** 2022-07-20</li>
+                     <li>**DPIIT No:** S/2022/DPIIT/1234</li>
+                     <li>**DPIIT Joining Date:** 2022-09-10</li>
+                     <li>**PAN:** FGHIJ5678K</li>
+                     <li>**GST:** 37FGHIJ5678K1Z6</li>
+                     <li>**Founders:** Jane Doe (50%), John Smith (50%)</li>
+                     <li>**Phone:** +91 7654321098</li>
+                     <li>**Email:** contact@andhraangels.in</li>
+                     <li>**LinkedIn:** <a href="https://linkedin.com/company/andhra-angels" target="_blank" class="document-link">LinkedIn Profile</a></li>
+                     <li>**Women Founder Startup:** Yes</li>
+                     <li>**Bank Details:** ICICI Bank, A/C: 9876543210, IFSC: ICIC0005678</li>
+                     <li>**Regd. Address:** TBI Incubation Center, Guntur, AP - 522001</li>
+                     <li>**One-Page Report:** Submitted (2024-04-10)</li>
+                     <li>**Patent:** Granted (Patent No. IN202300XXXX)</li>
+                     <li>**Incubation Agreement:** Signed</li>
+                 </ul>
+                 <p class="text-gray-600 mt-4">*(This is a static view of the full data. Use "Manage Details" to simulate editing.)*</p>
+            </div>
+
+            <div id="startup-content-manage-details" class="hidden">
+                 <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Manage Startup Details:</h3>
+                 <form id="startup-details-form">
+                    <div class="form-group">
+                        <label for="startupName">Startup Name (Short):</label>
+                        <input type="text" id="startupName" value="Andhra Angels">
+                    </div>
+                    <div class="form-group">
+                        <label for="regdStartupName">Registered Startup Name:</label>
+                        <input type="text" id="regdStartupName" value="Andhra Angels AgriTech Innovations Pvt. Ltd.">
+                    </div>
+                    <div class="form-group">
+                        <label for="startupType">Type of Startup:</label>
+                        <select id="startupType">
+                            <option value="Physical">Physical</option>
+                            <option value="Virtual">Virtual</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website:</label>
+                        <input type="text" id="website" value="https://andhraangels.in">
+                    </div>
+                    <div class="form-group">
+                        <label for="cinNumber">CIN Number:</label>
+                        <input type="text" id="cinNumber" value="U01110AP2022PTC098765">
+                    </div>
+                     <div class="form-group">
+                        <label for="cinDate">Date of CIN:</label>
+                        <input type="date" id="cinDate" value="2022-07-20">
+                    </div>
+                     <div class="form-group">
+                        <label for="dpiitNo">DPIIT No:</label>
+                        <input type="text" id="dpiitNo" value="S/2022/DPIIT/1234">
+                    </div>
+                     <div class="form-group">
+                        <label for="dpiitJoinDate">DPIIT Joining Date:</label>
+                        <input type="date" id="dpiitJoinDate" value="2022-09-10">
+                    </div>
+                     <div class="form-group">
+                        <label for="panNumber">PAN Number:</label>
+                        <input type="text" id="panNumber" value="FGHIJ5678K">
+                    </div>
+                     <div class="form-group">
+                        <label for="gstNumber">GST Number:</label>
+                        <input type="text" id="gstNumber" value="37FGHIJ5678K1Z6">
+                    </div>
+                    <div class="form-group">
+                        <label for="foundersNames">Founders Names (comma-separated):</label>
+                        <input type="text" id="foundersNames" value="Jane Doe, John Smith">
+                    </div>
+                    <div class="form-group">
+                        <label for="foundersPercentages">Founders % (comma-separated, e.g., 50%,50%):</label>
+                        <input type="text" id="foundersPercentages" value="50%,50%">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumbers">Phone Numbers (comma-separated):</label>
+                        <input type="tel" id="phoneNumbers" value="+91 7654321098">
+                    </div>
+                     <div class="form-group">
+                        <label for="emails">Emails (comma-separated):</label>
+                        <input type="email" id="emails" value="contact@andhraangels.in">
+                    </div>
+                     <div class="form-group">
+                        <label for="linkedinUrl">LinkedIn URL:</label>
+                        <input type="text" id="linkedinUrl" value="https://linkedin.com/company/andhra-angels">
+                    </div>
+                    <div class="form-checkbox-group">
+                        <input type="checkbox" id="isWomenFounder" checked>
+                        <label for="isWomenFounder">Is it a Women Founder Startup?</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="bankDetails">Bank Details:</label>
+                        <textarea id="bankDetails" rows="2">ICICI Bank, A/C: 9876543210, IFSC: ICIC0005678</textarea>
+                    </div>
+                     <div class="form-group">
+                        <label for="regdAddress">Registered Address:</label>
+                        <textarea id="regdAddress" rows="3">TBI Incubation Center, Guntur, AP - 522001</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="onePageReportStatus">One-Page Report Status:</label>
+                        <select id="onePageReportStatus">
+                            <option value="Submitted">Submitted</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Required">Required</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="onePageReportDate">One-Page Report Submission Date:</label>
+                        <input type="date" id="onePageReportDate" value="2024-04-10">
+                    </div>
+                    <div class="form-group">
+                        <label for="patentStatus">Patent Status:</label>
+                        <input type="text" id="patentStatus" value="Granted (Patent No. IN202300XXXX)">
+                    </div>
+                    <div class="form-group">
+                        <label for="incubationAgreementStatus">Incubation Agreement Status:</label>
+                        <input type="text" id="incubationAgreementStatus" value="Signed (View Document)">
+                    </div>
+
+                    <button type="button" id="saveStartupDetailsBtn" class="w-full py-3 px-6 rounded-lg shadow-md mb-4 font-semibold text-lg btn-secondary btn-hover transition duration-300">
+                        Save Changes
+                    </button>
+                    <button type="button" id="backToStartupDashboardBtn" class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg back-btn btn-hover transition duration-300">
+                        Back to Dashboard
+                    </button>
+                 </form>
+            </div>
+            
+            <div id="startup-content-funding" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Funding Details:</h3>
+                <p class="text-gray-600">Placeholder for detailed funding information and application forms.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: charts for funding breakdown, forms for new funding applications)*</p>
+            </div>
+            <div id="startup-content-rent" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Rent & Dues:</h3>
+                <p class="text-gray-600">Placeholder for rent payment history and current outstanding dues.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: payment history, current bill, payment gateway integration)*</p>
+            </div>
+            <div id="startup-content-agreements" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Signed Agreements:</h3>
+                <p class="text-gray-600">Placeholder for viewing and downloading legal agreements.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: list of documents, download links)*</p>
+            </div>
+
+
+            <button id="download-startup-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+                Download Screenshot
+            </button>
         </div>
-
-        <button class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-secondary btn-hover transition duration-300">
-            Apply for More Funding
-        </button>
-        <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-primary btn-hover transition duration-300">
-            Manage Rent & Dues
-        </button>
-        <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-accent btn-hover transition duration-300">
-            View Signed Agreements
-        </button>
-
-        <button id="download-startup-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
-            Download Screenshot
-        </button>
     </div>
 
     <!-- Staff Dashboard (This is the third "page") -->
-    <div id="staff-dashboard" class="container-card hidden">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold text-gray-800">Staff Dashboard</h1>
-            <button id="staff-logout-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Logout</button>
+    <div id="staff-dashboard" class="dashboard-container hidden">
+        <!-- Sidebar -->
+        <div class="sidebar md:flex hidden" id="staff-sidebar">
+            <div class="sidebar-header">
+                <img src="tbi%20logo.jpeg" alt="TBI Logo" class="sidebar-logo mx-auto">
+                <div class="sidebar-role">Staff</div>
+                <div class="sidebar-welcome" id="staff-sidebar-welcome-desktop">Welcome, Sandeep S!</div>
+            </div>
+            <nav class="flex-grow">
+                <ul>
+                    <li id="staff-sidebar-dashboard" class="sidebar-item active" data-content-id="staff-content-startups">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                        Dashboard
+                    </li>
+                    <li id="staff-sidebar-students" class="sidebar-item" data-content-id="staff-content-students">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        Students
+                    </li>
+                    <li id="staff-sidebar-startups" class="sidebar-item" data-content-id="staff-content-startups">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                        Startups
+                    </li>
+                    <li id="staff-sidebar-programs" class="sidebar-item" data-content-id="staff-content-programs">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 012 14v2a1 1 0 001 1h14a1 1 0 001-1v-2a1 1 0 01-.293-.707L16 11.586V8a6 6 0 00-6-6zm-6 8.414V14h12V8.414l.293-.293A1 1 0 0017 11v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L4 10.414z"></path></svg>
+                        Programs
+                    </li>
+                    <li id="staff-sidebar-reports" class="sidebar-item" data-content-id="staff-content-reports">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                        Reports
+                    </li>
+                    <li id="staff-sidebar-options" class="sidebar-item" data-content-id="staff-content-options">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 4.09A1 1 0 1010.51 5.91 1 1 0 0011.49 4.09zM4.09 11.49A1 1 0 105.91 10.51 1 1 0 004.09 11.49zM15.91 11.49A1 1 0 1014.09 10.51 1 1 0 0015.91 11.49zM10.51 15.91A1 1 0 1011.49 14.09 1 1 0 0010.51 15.91zM7 7.5a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2zm-3 6a1 1 0 100-2 1 1 0 000 2zM7 12.5a1 1 0 100-2 1 1 0 000 2zM13 12.5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                        Staff Options
+                    </li>
+                </ul>
+            </nav>
+            <div class="mt-auto">
+                <button id="staff-logout-btn" class="sidebar-item w-full justify-center bg-red-600 hover:bg-red-700 text-white">
+                    <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H5v2a1 1 0 01-2 0V3zm9.3 8.7a1 1 0 001.4-1.4L10 7.586l-3.707 3.707a1 1 0 001.414 1.414L9 10.414V17a1 1 0 102 0V10.414l1.293 1.293z" clip-rule="evenodd"></path></svg>
+                    Logout
+                </button>
+            </div>
         </div>
-        
-        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
-
-        <h2 id="staff-welcome-message" class="text-xl font-semibold mb-6 text-gray-700"></h2>
-
-        <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">All Startup Data:</h3>
-        <div class="staff-table-container">
-            <table class="staff-table">
-                <thead>
-                    <tr>
-                        <th>Startup Name</th>
-                        <th>Regd. Name</th>
-                        <th>Type</th>
-                        <th>Website</th>
-                        <th>CIN</th>
-                        <th>Date of CIN</th>
-                        <th>DPIIT No</th>
-                        <th>DPIIT Joining Date</th>
-                        <th>PAN</th>
-                        <th>GST</th>
-                        <th>Founders</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>LinkedIn</th>
-                        <th>Women Founder</th>
-                        <th>Bank Details</th>
-                        <th>Regd. Address</th>
-                        <th>One-Page Report</th>
-                        <th>Report Date</th>
-                        <th>Patent</th>
-                        <th>Incubation Agreement</th>
-                    </tr>
-                </thead>
-                <tbody id="startup-data-table-body">
-                    <!-- Startup data will be rendered here by JavaScript -->
-                </tbody>
-            </table>
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-mobile-overlay" id="staff-sidebar-mobile-overlay">
+            <div class="sidebar" style="width: 250px;">
+                <span class="sidebar-mobile-close" id="staff-sidebar-close">&times;</span>
+                <div class="sidebar-header">
+                    <img src="tbi%20logo.jpeg" alt="TBI Logo" class="sidebar-logo mx-auto">
+                    <div class="sidebar-role">Staff</div>
+                    <div class="sidebar-welcome" id="staff-sidebar-welcome-mobile">Welcome, Sandeep S!</div>
+                </div>
+                <nav class="flex-grow">
+                    <ul>
+                        <li class="sidebar-item active" data-content-id="staff-content-dashboard">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            Dashboard
+                        </li>
+                        <li class="sidebar-item" data-content-id="staff-content-students">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                            Students
+                        </li>
+                        <li class="sidebar-item" data-content-id="staff-content-startups">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                            Startups
+                        </li>
+                        <li class="sidebar-item" data-content-id="staff-content-programs">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 012 14v2a1 1 0 001 1h14a1 1 0 001-1v-2a1 1 0 01-.293-.707L16 11.586V8a6 6 0 00-6-6zm-6 8.414V14h12V8.414l.293-.293A1 1 0 0017 11v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2a1 1 0 00-.293-.707L4 10.414z"></path></svg>
+                            Programs
+                        </li>
+                        <li class="sidebar-item" data-content-id="staff-content-reports">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 3H4v2h12V7zm0 4H4v2h12v-2z" clip-rule="evenodd"></path></svg>
+                            Reports
+                        </li>
+                        <li class="sidebar-item" data-content-id="staff-content-options">
+                            <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M11.49 4.09A1 1 0 1010.51 5.91 1 1 0 0011.49 4.09zM4.09 11.49A1 1 0 105.91 10.51 1 1 0 004.09 11.49zM15.91 11.49A1 1 0 1014.09 10.51 1 1 0 0015.91 11.49zM10.51 15.91A1 1 0 1011.49 14.09 1 1 0 0010.51 15.91zM7 7.5a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2zm-3 6a1 1 0 100-2 1 1 0 000 2zM7 12.5a1 1 0 100-2 1 1 0 000 2zM13 12.5a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
+                            Staff Options
+                        </li>
+                    </ul>
+                </nav>
+                <div class="mt-auto">
+                    <button id="staff-logout-btn-mobile" class="sidebar-item w-full justify-center bg-red-600 hover:bg-red-700 text-white">
+                        <svg class="sidebar-item-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-2 0V4H5v2a1 1 0 01-2 0V3zm9.3 8.7a1 1 0 001.4-1.4L10 7.586l-3.707 3.707a1 1 0 001.414 1.414L9 10.414V17a1 1 0 102 0V10.414l1.293 1.293z" clip-rule="evenodd"></path></svg>
+                        Logout
+                    </button>
+                </div>
+            </div>
         </div>
+        <!-- Main Content for Staff Dashboard -->
+        <div class="main-content-area relative">
+            <button id="staff-hamburger-menu" class="hamburger-menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+            <div class="flex justify-between items-center mb-6">
+                <h1 id="staff-main-title" class="text-2xl font-bold text-gray-800">Staff Dashboard</h1>
+                <button id="staff-logout-btn-desktop" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm hidden md:block">Logout</button>
+            </div>
+            
+            <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
 
-        <button id="download-staff-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
-            Download Screenshot
-        </button>
+            <h2 id="staff-welcome-message" class="text-xl font-semibold mb-6 text-gray-700"></h2>
+
+            <!-- Staff Dashboard Content Sections -->
+            <div id="staff-content-startups">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">All Startup Data:</h3>
+                <div class="staff-table-container">
+                    <table class="staff-table">
+                        <thead>
+                            <tr>
+                                <th>Startup Name</th>
+                                <th>Regd. Name</th>
+                                <th>Type</th>
+                                <th>Website</th>
+                                <th>CIN</th>
+                                <th>Date of CIN</th>
+                                <th>DPIIT No</th>
+                                <th>DPIIT Joining Date</th>
+                                <th>PAN</th>
+                                <th>GST</th>
+                                <th>Founders</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>LinkedIn</th>
+                                <th>Women Founder</th>
+                                <th>Bank Details</th>
+                                <th>Regd. Address</th>
+                                <th>One-Page Report</th>
+                                <th>Report Date</th>
+                                <th>Patent</th>
+                                <th>Incubation Agreement</th>
+                            </tr>
+                        </thead>
+                        <tbody id="startup-data-table-body">
+                            <!-- Startup data will be rendered here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="staff-content-students" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">All Student Data:</h3>
+                <p class="text-gray-600">Placeholder for student data table.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: detailed student list similar to startup data, with search/filter options)*</p>
+            </div>
+
+            <div id="staff-content-programs" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Program Management:</h3>
+                <p class="text-gray-600">Placeholder for managing TBI programs and events.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: forms to create new programs, view upcoming events, manage registrations)*</p>
+            </div>
+
+            <div id="staff-content-reports" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Reports & Analytics:</h3>
+                <p class="text-gray-600">Placeholder for generating various reports.</p>
+                <p class="text-gray-600 mt-2">*(To be implemented: options to generate reports on funding, student engagement, startup progress etc.)*</p>
+            </div>
+
+            <div id="staff-content-options" class="hidden">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">Staff Options:</h3>
+                <p class="text-gray-600">This section is for internal staff management and settings.</p>
+                <ul class="list-disc list-inside text-gray-600 mt-2">
+                    <li>Manage Staff Accounts (Placeholder)</li>
+                    <li>Update System Settings (Placeholder)</li>
+                    <li>View System Logs (Placeholder)</li>
+                </ul>
+                <p class="text-gray-600 mt-2">*(Specific features for internal staff use, only visible to appropriate roles)*</p>
+            </div>
+
+            <button id="download-staff-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+                Download Screenshot
+            </button>
+        </div>
     </div>
 
 
@@ -347,9 +1023,14 @@
             const credentialSubmitBtn = document.getElementById('credential-submit-btn');
             const credentialLoginError = document.getElementById('credential-login-error');
 
-            const studentLogoutBtn = document.getElementById('student-logout-btn');
-            const startupLogoutBtn = document.getElementById('startup-logout-btn');
-            const staffLogoutBtn = document.getElementById('staff-logout-btn');
+            // Logout buttons (desktop and mobile for each role)
+            const studentLogoutBtnDesktop = document.getElementById('student-logout-btn-desktop');
+            const studentLogoutBtnMobile = document.getElementById('student-logout-btn-mobile');
+            const startupLogoutBtnDesktop = document.getElementById('startup-logout-btn'); // Renamed for clarity in HTML, keeping previous ID for JS
+            const startupLogoutBtnMobile = document.getElementById('startup-logout-btn-mobile');
+            const staffLogoutBtnDesktop = document.getElementById('staff-logout-btn-desktop');
+            const staffLogoutBtnMobile = document.getElementById('staff-logout-btn-mobile');
+
 
             const downloadInitialScreenshotBtn = document.getElementById('download-initial-screenshot-btn');
             const downloadCredentialScreenshotBtn = document.getElementById('download-credential-screenshot-btn');
@@ -360,7 +1041,86 @@
             const screenshotHelpModal = document.getElementById('screenshot-help-modal');
             const closeScreenshotModalBtn = document.getElementById('close-screenshot-modal');
             const staffWelcomeMessage = document.getElementById('staff-welcome-message');
+            const studentSidebarWelcome = document.getElementById('student-sidebar-welcome');
+            const studentSidebarWelcomeMobile = document.getElementById('student-sidebar-welcome-mobile');
+            const startupSidebarWelcome = document.getElementById('startup-sidebar-welcome');
+            const startupSidebarWelcomeMobile = document.getElementById('startup-sidebar-welcome-mobile');
+            const staffSidebarWelcomeDesktop = document.getElementById('staff-sidebar-welcome-desktop');
+            const staffSidebarWelcomeMobile = document.getElementById('staff-sidebar-welcome-mobile');
+            
             const startupDataTableBody = document.getElementById('startup-data-table-body');
+
+            // Staff Dashboard Content Sections (main content area within staff dashboard)
+            const staffContentStartups = document.getElementById('staff-content-startups');
+            const staffContentStudents = document.getElementById('staff-content-students');
+            const staffContentPrograms = document.getElementById('staff-content-programs');
+            const staffContentReports = document.getElementById('staff-content-reports');
+            const staffContentOptions = document.getElementById('staff-content-options'); 
+
+            // Sidebar elements
+            const studentHamburgerMenu = document.getElementById('student-hamburger-menu');
+            const studentSidebarMobileOverlay = document.getElementById('student-sidebar-mobile-overlay');
+            const studentSidebarClose = document.getElementById('student-sidebar-close');
+
+            const startupHamburgerMenu = document.getElementById('startup-hamburger-menu');
+            const startupSidebarMobileOverlay = document.getElementById('startup-sidebar-mobile-overlay');
+            const startupSidebarClose = document.getElementById('startup-sidebar-close');
+            // Startup sidebar navigation items
+            const startupSidebarDashboardItem = document.getElementById('startup-sidebar-dashboard');
+            const startupSidebarDetailsItem = document.getElementById('startup-sidebar-details');
+            const startupSidebarManageDetailsItem = document.getElementById('startup-sidebar-manage-details'); // New sidebar item for manage details
+            const startupSidebarFundingItem = document.getElementById('startup-sidebar-funding');
+            const startupSidebarRentItem = document.getElementById('startup-sidebar-rent');
+            const startupSidebarAgreementsItem = document.getElementById('startup-sidebar-agreements');
+
+
+            const staffHamburgerMenu = document.getElementById('staff-hamburger-menu');
+            const staffSidebarMobileOverlay = document.getElementById('staff-sidebar-mobile-overlay');
+            const staffSidebarClose = document.getElementById('staff-sidebar-close');
+
+            // Sidebar navigation items for Staff
+            const staffSidebarDashboardItem = document.getElementById('staff-sidebar-dashboard');
+            const staffSidebarStudentsItem = document.getElementById('staff-sidebar-students');
+            const staffSidebarStartupsItem = document.getElementById('staff-sidebar-startups');
+            const staffSidebarProgramsItem = document.getElementById('staff-sidebar-programs');
+            const staffSidebarReportsItem = document.getElementById('staff-sidebar-reports');
+            const staffSidebarOptionsItem = document.getElementById('staff-sidebar-options');
+
+
+            // Startup Dashboard Content Sections (main content area within startup dashboard)
+            const startupContentDashboard = document.getElementById('startup-content-dashboard');
+            const startupContentDetails = document.getElementById('startup-content-details');
+            const startupContentManageDetails = document.getElementById('startup-content-manage-details'); // Content div for manage details
+            const startupContentFunding = document.getElementById('startup-content-funding');
+            const startupContentRent = document.getElementById('startup-content-rent');
+            const startupContentAgreements = document.getElementById('startup-content-agreements');
+
+            // Form elements for startup details
+            const startupNameInput = document.getElementById('startupName');
+            const regdStartupNameInput = document.getElementById('regdStartupName');
+            const startupTypeSelect = document.getElementById('startupType');
+            const websiteInput = document.getElementById('website');
+            const cinNumberInput = document.getElementById('cinNumber');
+            const cinDateInput = document.getElementById('cinDate');
+            const dpiitNoInput = document.getElementById('dpiitNo');
+            const dpiitJoinDateInput = document.getElementById('dpiitJoinDate');
+            const panNumberInput = document.getElementById('panNumber');
+            const gstNumberInput = document.getElementById('gstNumber');
+            const foundersNamesInput = document.getElementById('foundersNames');
+            const foundersPercentagesInput = document.getElementById('foundersPercentages');
+            const phoneNumbersInput = document.getElementById('phoneNumbers');
+            const emailsInput = document.getElementById('emails');
+            const linkedinUrlInput = document.getElementById('linkedinUrl');
+            const isWomenFounderCheckbox = document.getElementById('isWomenFounder');
+            const bankDetailsTextarea = document.getElementById('bankDetails');
+            const regdAddressTextarea = document.getElementById('regdAddress');
+            const onePageReportStatusSelect = document.getElementById('onePageReportStatus');
+            const onePageReportDateInput = document.getElementById('onePageReportDate');
+            const patentStatusInput = document.getElementById('patentStatus');
+            const incubationAgreementStatusInput = document.getElementById('incubationAgreementStatus');
+            const saveStartupDetailsBtn = document.getElementById('saveStartupDetailsBtn');
+            const backToStartupDashboardBtn = document.getElementById('backToStartupDashboardBtn');
+
 
             let currentSelectedRole = ''; // Variable to store the selected role
 
@@ -456,7 +1216,107 @@
             ];
 
 
-            // Function to switch screens and update background
+            // Function to show/hide content sections within Staff Dashboard
+            function showStaffContent(contentId) {
+                staffContentStartups.classList.add('hidden');
+                staffContentStudents.classList.add('hidden');
+                staffContentPrograms.classList.add('hidden');
+                staffContentReports.classList.add('hidden');
+                staffContentOptions.classList.add('hidden'); // Hide staff options content
+
+                // Remove active class from all sidebar items
+                staffSidebarDashboardItem.classList.remove('active');
+                staffSidebarStudentsItem.classList.remove('active');
+                staffSidebarStartupsItem.classList.remove('active');
+                staffSidebarProgramsItem.classList.remove('active');
+                staffSidebarReportsItem.classList.remove('active');
+                staffSidebarOptionsItem.classList.remove('active'); // Remove active from staff options
+
+                // Show the requested content and set active class
+                if (contentId === 'startups') {
+                    staffContentStartups.classList.remove('hidden');
+                    staffSidebarStartupsItem.classList.add('active');
+                    document.getElementById('staff-main-title').textContent = 'Staff Dashboard - Startups';
+                    renderStartupTable(); // Re-render table if coming from another section
+                } else if (contentId === 'dashboard') {
+                    // For staff dashboard, we can default to showing startups or a summary
+                    staffContentStartups.classList.remove('hidden'); // Default to startups for dashboard
+                    staffSidebarDashboardItem.classList.add('active');
+                    document.getElementById('staff-main-title').textContent = 'Staff Dashboard';
+                    renderStartupTable();
+                } else if (contentId === 'students') {
+                    staffContentStudents.classList.remove('hidden');
+                    staffSidebarStudentsItem.classList.add('active');
+                    document.getElementById('staff-main-title').textContent = 'Staff Dashboard - Students';
+                } else if (contentId === 'programs') {
+                    staffContentPrograms.classList.remove('hidden');
+                    staffSidebarProgramsItem.classList.add('active');
+                    document.getElementById('staff-main-title').textContent = 'Staff Dashboard - Programs';
+                } else if (contentId === 'reports') {
+                    staffContentReports.classList.remove('hidden');
+                    staffSidebarReportsItem.classList.add('active');
+                    document.getElementById('staff-main-title').textContent = 'Staff Dashboard - Reports';
+                } else if (contentId === 'options') { // New staff options content
+                    staffContentOptions.classList.remove('hidden');
+                    staffSidebarOptionsItem.classList.add('active');
+                    document.getElementById('staff-main-title').textContent = 'Staff Dashboard - Staff Options';
+                }
+                // Close mobile sidebar if open
+                staffSidebarMobileOverlay.classList.add('hidden');
+                staffSidebarMobileOverlay.classList.remove('active');
+            }
+
+            // Function to show/hide content sections within Startup Dashboard
+            function showStartupContent(contentId) {
+                startupContentDashboard.classList.add('hidden');
+                startupContentDetails.classList.add('hidden');
+                startupContentManageDetails.classList.add('hidden'); // Hide manage details content
+                startupContentFunding.classList.add('hidden');
+                startupContentRent.classList.add('hidden');
+                startupContentAgreements.classList.add('hidden');
+
+                // Remove active class from all sidebar items
+                startupSidebarDashboardItem.classList.remove('active');
+                startupSidebarDetailsItem.classList.remove('active');
+                startupSidebarManageDetailsItem.classList.remove('active'); // Remove active from manage details
+                startupSidebarFundingItem.classList.remove('active');
+                startupSidebarRentItem.classList.remove('active');
+                startupSidebarAgreementsItem.classList.remove('active');
+
+                // Show the requested content and set active class
+                if (contentId === 'dashboard') {
+                    startupContentDashboard.classList.remove('hidden');
+                    startupSidebarDashboardItem.classList.add('active');
+                    document.getElementById('startup-main-title').textContent = 'Startup Dashboard';
+                } else if (contentId === 'details') {
+                    startupContentDetails.classList.remove('hidden');
+                    startupSidebarDetailsItem.classList.add('active');
+                    document.getElementById('startup-main-title').textContent = 'Startup Dashboard - Details';
+                } else if (contentId === 'manage-details') { // Show manage details content
+                    startupContentManageDetails.classList.remove('hidden');
+                    startupSidebarManageDetailsItem.classList.add('active');
+                    document.getElementById('startup-main-title').textContent = 'Startup Dashboard - Manage Details';
+                    populateStartupDetailsForm(); // Populate form when shown
+                } else if (contentId === 'funding') {
+                    startupContentFunding.classList.remove('hidden');
+                    startupSidebarFundingItem.classList.add('active');
+                    document.getElementById('startup-main-title').textContent = 'Startup Dashboard - Funding';
+                } else if (contentId === 'rent') {
+                    startupContentRent.classList.remove('hidden');
+                    startupSidebarRentItem.classList.add('active');
+                    document.getElementById('startup-main-title').textContent = 'Startup Dashboard - Rent & Dues';
+                } else if (contentId === 'agreements') {
+                    startupContentAgreements.classList.remove('hidden');
+                    startupSidebarAgreementsItem.classList.add('active');
+                    document.getElementById('startup-main-title').textContent = 'Startup Dashboard - Agreements';
+                }
+                // Close mobile sidebar if open
+                startupSidebarMobileOverlay.classList.add('hidden');
+                startupSidebarMobileOverlay.classList.remove('active');
+            }
+
+
+            // Function to switch full screens and update background
             function showScreen(screenId, userName = '') {
                 // Hide all screens first
                 roleSelectionScreen.classList.add('hidden');
@@ -487,12 +1347,25 @@
                     document.body.style.backgroundColor = '';
                 } else if (screenId === 'student-dashboard') {
                     studentDashboard.classList.remove('hidden');
+                    // Set sidebar welcome message
+                    if (studentSidebarWelcome) studentSidebarWelcome.textContent = `Welcome, ${userName}!`;
+                    if (studentSidebarWelcomeMobile) studentSidebarWelcomeMobile.textContent = `Welcome, ${userName}!`;
+                    // Default content for student is dashboard
+                    showStudentContent('dashboard'); 
                 } else if (screenId === 'startup-dashboard') {
                     startupDashboard.classList.remove('hidden');
+                    // Set sidebar welcome message
+                    if (startupSidebarWelcome) startupSidebarWelcome.textContent = `Welcome, ${userName}!`;
+                    if (startupSidebarWelcomeMobile) startupSidebarWelcomeMobile.textContent = `Welcome, ${userName}!`;
+                    // Default content for startup is dashboard
+                    showStartupContent('dashboard'); 
                 } else if (screenId === 'staff-dashboard') {
                     staffDashboard.classList.remove('hidden');
-                    staffWelcomeMessage.textContent = `Welcome, ${userName}!`;
-                    renderStartupTable();
+                    // Set sidebar welcome message
+                    if (staffWelcomeMessage) staffWelcomeMessage.textContent = `Welcome, ${userName}!`;
+                    if (staffSidebarWelcomeDesktop) staffSidebarWelcomeDesktop.textContent = `Welcome, ${userName}!`;
+                    if (staffSidebarWelcomeMobile) staffSidebarWelcomeMobile.textContent = `Welcome, ${userName}!`;
+                    showStaffContent('startups'); // Default content for staff is Startups data
                 }
             }
 
@@ -539,6 +1412,35 @@
                     `;
                     startupDataTableBody.appendChild(row);
                 });
+            }
+
+            // Populate Startup Details Form with placeholder data (Andhra Angels)
+            function populateStartupDetailsForm() {
+                const currentStartup = startupsData.find(s => s.name === "Andhra Angels"); // Assume Andhra Angels for demo
+                if (currentStartup) {
+                    startupNameInput.value = currentStartup.name;
+                    regdStartupNameInput.value = currentStartup.regdName;
+                    startupTypeSelect.value = currentStartup.type;
+                    websiteInput.value = currentStartup.website;
+                    cinNumberInput.value = currentStartup.cin;
+                    cinDateInput.value = currentStartup.dateOfCin;
+                    dpiitNoInput.value = currentStartup.dpiitNo;
+                    dpiitJoinDateInput.value = currentStartup.joiningDateDpiit;
+                    panNumberInput.value = currentStartup.pan;
+                    gstNumberInput.value = currentStartup.gst;
+                    foundersNamesInput.value = currentStartup.founders.map(f => f.name).join(', ');
+                    foundersPercentagesInput.value = currentStartup.founders.map(f => f.percentage).join(',');
+                    phoneNumbersInput.value = currentStartup.phone;
+                    emailsInput.value = currentStartup.email;
+                    linkedinUrlInput.value = currentStartup.linkedin;
+                    isWomenFounderCheckbox.checked = currentStartup.isWomenFounderStartup === 'Yes';
+                    bankDetailsTextarea.value = currentStartup.bankDetails;
+                    regdAddressTextarea.value = currentStartup.regdAddress;
+                    onePageReportStatusSelect.value = currentStartup.onePageReport;
+                    onePageReportDateInput.value = currentStartup.onePageReportDate;
+                    patentStatusInput.value = currentStartup.patent;
+                    incubationAgreementStatusInput.value = currentStartup.incubationAgreement;
+                }
             }
 
 
@@ -589,9 +1491,91 @@
             });
 
             // Logout Button Event Listeners (all logouts return to role selection)
-            studentLogoutBtn.addEventListener('click', () => { showScreen('role-selection-screen'); });
-            startupLogoutBtn.addEventListener('click', () => { showScreen('role-selection-screen'); });
-            staffLogoutBtn.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            studentLogoutBtnDesktop.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            studentLogoutBtnMobile.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            startupLogoutBtnDesktop.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            startupLogoutBtnMobile.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            staffLogoutBtnDesktop.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            staffLogoutBtnMobile.addEventListener('click', () => { showScreen('role-selection-screen'); });
+
+
+            // Hamburger menu / Sidebar toggle for mobile
+            studentHamburgerMenu.addEventListener('click', () => { studentSidebarMobileOverlay.classList.remove('hidden'); studentSidebarMobileOverlay.classList.add('active'); });
+            studentSidebarClose.addEventListener('click', () => { studentSidebarMobileOverlay.classList.add('hidden'); studentSidebarMobileOverlay.classList.remove('active'); });
+
+            startupHamburgerMenu.addEventListener('click', () => { startupSidebarMobileOverlay.classList.remove('hidden'); startupSidebarMobileOverlay.classList.add('active'); });
+            startupSidebarClose.addEventListener('click', () => { startupSidebarMobileOverlay.classList.add('hidden'); startupSidebarMobileOverlay.classList.remove('active'); });
+
+            staffHamburgerMenu.addEventListener('click', () => { staffSidebarMobileOverlay.classList.remove('hidden'); staffSidebarMobileOverlay.classList.add('active'); });
+            staffSidebarClose.addEventListener('click', () => { staffSidebarMobileOverlay.classList.add('hidden'); staffSidebarMobileOverlay.classList.remove('active'); });
+
+            // Staff Sidebar Item Click Listeners (delegated to showStaffContent)
+            document.querySelectorAll('#staff-sidebar li.sidebar-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const contentId = item.dataset.contentId;
+                    if (contentId) {
+                        showStaffContent(contentId.replace('staff-content-', '')); // Remove prefix for function
+                    }
+                });
+            });
+            // Startup Sidebar Item Click Listeners (delegated to showStartupContent)
+            document.querySelectorAll('#startup-sidebar li.sidebar-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const contentId = item.dataset.contentId;
+                    if (contentId) {
+                        showStartupContent(contentId.replace('startup-content-', '')); // Remove prefix
+                    }
+                });
+            });
+            // Student Sidebar Item Click Listeners (delegated to showStudentContent)
+            document.querySelectorAll('#student-sidebar li.sidebar-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const contentId = item.dataset.contentId;
+                    if (contentId) {
+                        showStudentContent(contentId.replace('student-content-', '')); // Remove prefix
+                    }
+                });
+            });
+
+
+            // Save Startup Details (placeholder)
+            saveStartupDetailsBtn.addEventListener('click', () => {
+                // In a real app, you would gather all form data here
+                const updatedData = {
+                    name: startupNameInput.value,
+                    regdName: regdStartupNameInput.value,
+                    type: startupTypeSelect.value,
+                    website: websiteInput.value,
+                    cin: cinNumberInput.value,
+                    dateOfCin: cinDateInput.value,
+                    dpiitNo: dpiitNoInput.value,
+                    dpiitJoinDate: dpiitJoinDateInput.value,
+                    pan: panNumberInput.value,
+                    gst: gstNumberInput.value,
+                    founders: foundersNamesInput.value.split(',').map((name, index) => ({
+                        name: name.trim(),
+                        percentage: foundersPercentagesInput.value.split(',')[index] ? foundersPercentagesInput.value.split(',')[index].trim() : '',
+                        photo: `https://placehold.co/50x50/RANDOM_COLOR/ffffff?text=${name.trim().charAt(0)}`
+                    })),
+                    phone: phoneNumbersInput.value,
+                    email: emailsInput.value,
+                    linkedin: linkedinUrlInput.value,
+                    isWomenFounderStartup: isWomenFounderCheckbox.checked ? 'Yes' : 'No',
+                    bankDetails: bankDetailsTextarea.value,
+                    regdAddress: regdAddressTextarea.value,
+                    onePageReport: onePageReportStatusSelect.value,
+                    onePageReportDate: onePageReportDateInput.value,
+                    patent: patentStatusInput.value,
+                    incubationAgreement: incubationAgreementStatusInput.value
+                };
+                alert('Startup details saved! (This is a demo, data is not persistent.)\n\n' + JSON.stringify(updatedData, null, 2));
+                // In a real app, you would send this to your backend/database
+            });
+            // Back to Startup Dashboard from Manage Details
+            backToStartupDashboardBtn.addEventListener('click', () => {
+                showStartupContent('dashboard');
+            });
+
 
             // Screenshot Button Event Listeners
             downloadInitialScreenshotBtn.addEventListener('click', () => { screenshotHelpModal.classList.remove('hidden'); });
