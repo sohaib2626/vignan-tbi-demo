@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vignan TBI Connect Login Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Selected Palette: Energetic & Playful (Blues: #00A6FB, Greens: #00E099, Yellows: #F5B700) */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F4F7F9; /* Light gray background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1rem;
+            color: #334155; /* Dark text */
+            transition: background-color 0.3s ease; /* Smooth background transition */
+        }
+        .container-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px; /* Default max-width for login/small dashboards */
+            text-align: center;
+        }
+        .login-bg-gradient {
+            background-image: linear-gradient(to bottom right, #BBDEFB, #90CAF9); /* Lighter blue gradient for Vignan feel */
+        }
+        .btn-primary {
+            background-color: #00A6FB; /* Blue */
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #00E099; /* Green */
+            color: white;
+        }
+        .btn-accent {
+            background-color: #F5B700; /* Yellow */
+            color: white;
+        }
+        .btn-hover:hover {
+            opacity: 0.9;
+        }
+        .back-btn {
+            background-color: #CBD5E0; /* Gray */
+            color: #4A5568;
+        }
+        .back-btn:hover {
+            background-color: #A0AEC0;
+        }
+        .membership-status {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00E099; /* Green for active */
+        }
+        .membership-expired {
+            color: #FF3D3D; /* Red for expired */
+        }
+        .funding-amount {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        .staff-table-container {
+            width: 100%;
+            overflow-x: auto; /* Enable horizontal scrolling for large tables */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .staff-table {
+            width: 100%;
+            min-width: 1200px; /* Ensure minimum width for wide tables */
+            border-collapse: separate;
+            border-spacing: 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden; /* Ensures rounded corners apply to content */
+        }
+        .staff-table th, .staff-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #E2E8F0;
+            white-space: nowrap; /* Prevent text wrapping in table cells */
+        }
+        .staff-table th {
+            background-color: #F7FAFC;
+            font-weight: 600;
+            color: #2D3748;
+            position: sticky;
+            top: 0; /* Make header sticky when scrolling */
+            z-index: 10;
+        }
+        .staff-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .staff-table tbody tr:hover {
+            background-color: #F0F4F8;
+        }
+        .founder-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .founder-photo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
+            border: 1px solid #CBD5E0;
+        }
+        .document-link {
+            color: #00A6FB;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        /* Make staff dashboard wider */
+        #staff-dashboard.container-card {
+            max-width: 95%; /* Adjust for larger content */
+            padding: 1.5rem;
+        }
+        @media (min-width: 1024px) {
+            #staff-dashboard.container-card {
+                max-width: 1200px; /* Even wider on large screens */
+            }
+        }
+    </style>
+</head>
+<body class="login-bg-gradient">
+
+    <!-- Role Selection Screen (This is the first "page") -->
+    <div id="role-selection-screen" class="container-card">
+        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-20 w-auto mx-auto mb-6 rounded-lg">
+        <h1 class="text-3xl font-bold mb-8 text-gray-800">Vignan TBI Connect</h1>
+        <h2 class="text-xl font-semibold mb-6 text-gray-700">Select Your Role:</h2>
+        
+        <button id="select-student-role-btn" class="w-full py-3 px-6 rounded-lg shadow-md mb-4 font-semibold text-lg btn-primary btn-hover transition duration-300">
+            Student
+        </button>
+        <button id="select-startup-role-btn" class="w-full py-3 px-6 rounded-lg shadow-md mb-4 font-semibold text-lg btn-secondary btn-hover transition duration-300">
+            Startup
+        </button>
+        <button id="select-staff-role-btn" class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-accent btn-hover transition duration-300">
+            Staff
+        </button>
+        
+        <button id="download-initial-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+            Download Screenshot
+        </button>
+    </div>
+
+    <!-- Credential Input Screen (This is the second "page") -->
+    <div id="credential-input-screen" class="container-card hidden">
+        <div class="flex justify-between items-center mb-6">
+            <h1 id="credential-screen-title" class="text-2xl font-bold text-gray-800">Login</h1>
+            <button id="back-to-roles-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Back</button>
+        </div>
+        
+        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
+
+        <div class="mb-4 text-left">
+            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+            <input type="text" id="username" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter your username">
+        </div>
+        <div class="mb-6 text-left">
+            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+            <input type="password" id="password" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter your password">
+        </div>
+        <button id="credential-submit-btn" class="w-full py-3 px-6 rounded-lg shadow-md mb-4 font-semibold text-lg btn-primary btn-hover transition duration-300">
+            Login
+        </button>
+        <p id="credential-login-error" class="text-red-500 text-sm mt-2 hidden">Invalid username or password for this role.</p>
+
+        <button id="download-credential-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+            Download Screenshot
+        </button>
+    </div>
+
+    <!-- Student Dashboard (This is the third "page") -->
+    <div id="student-dashboard" class="container-card hidden">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Student Dashboard</h1>
+            <button id="student-logout-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Logout</button>
+        </div>
+        
+        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
+
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Welcome, Sohaib!</h2>
+
+        <div class="text-left mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <p class="font-medium text-lg text-blue-700 mb-2">Membership Status:</p>
+            <p class="membership-status">Active</p>
+            <p class="text-sm text-gray-600 mt-1">Valid Until: 31 December, 2025</p>
+        </div>
+
+        <div class="text-left mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <p class="font-medium text-lg text-gray-700 mb-2">Student Data:</p>
+            <p class="text-base text-gray-600">Department: Computer Science Engineering</p>
+            <p class="text-base text-gray-600">Batch: 2026</p>
+            <p class="text-base text-gray-600">Enrollment ID: VBIT-CSE-202301</p>
+        </div>
+
+        <button class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-primary btn-hover transition duration-300">
+            View Program Updates
+        </button>
+        <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-secondary btn-hover transition duration-300">
+            Explore Internship Opportunities
+        </button>
+
+        <button id="download-student-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+            Download Screenshot
+        </button>
+    </div>
+
+    <!-- Startup Dashboard (This is the third "page") -->
+    <div id="startup-dashboard" class="container-card hidden">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Startup Dashboard</h1>
+            <button id="startup-logout-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Logout</button>
+        </div>
+        
+        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
+
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Welcome, Andhra Angels!</h2>
+
+        <div class="text-left mb-6 p-4 bg-green-50 rounded-lg border border-green-200">
+            <p class="font-medium text-lg text-green-700 mb-2">Startup Details:</p>
+            <p class="text-base text-gray-600">Industry: Agri-Tech Solutions</p>
+            <p class="text-base text-gray-600">Founded: October 2023</p>
+            <p class="text-base text-gray-600">Team Size: 5</p>
+            <p class="text-base text-gray-600">Incubation Manager: Abdul Riyaz</p>
+        </div>
+
+        <div class="text-left mb-6 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+            <p class="font-medium text-lg text-yellow-700 mb-2">Funding Overview:</p>
+            <p class="text-base text-gray-600">TBI Seed Fund Received: <span class="funding-amount text-yellow-800">₹10 Lakhs</span></p>
+            <p class="text-base text-gray-600">Other Funds Secured: <span class="funding-amount text-yellow-800">₹5 Lakhs</span></p>
+        </div>
+
+        <button class="w-full py-3 px-6 rounded-lg shadow-md font-semibold text-lg btn-secondary btn-hover transition duration-300">
+            Apply for More Funding
+        </button>
+        <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-primary btn-hover transition duration-300">
+            Manage Rent & Dues
+        </button>
+        <button class="w-full py-3 px-6 rounded-lg shadow-md mt-4 font-semibold text-lg btn-accent btn-hover transition duration-300">
+            View Signed Agreements
+        </button>
+
+        <button id="download-startup-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+            Download Screenshot
+        </button>
+    </div>
+
+    <!-- Staff Dashboard (This is the third "page") -->
+    <div id="staff-dashboard" class="container-card hidden">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Staff Dashboard</h1>
+            <button id="staff-logout-btn" class="py-2 px-4 rounded-md back-btn hover:back-btn transition duration-300 text-sm">Logout</button>
+        </div>
+        
+        <img src="tbi%20logo.jpeg" alt="TBI Logo" class="h-16 w-auto mx-auto mb-6 rounded-lg">
+
+        <h2 id="staff-welcome-message" class="text-xl font-semibold mb-6 text-gray-700"></h2>
+
+        <h3 class="text-xl font-semibold mb-4 text-gray-700 text-left">All Startup Data:</h3>
+        <div class="staff-table-container">
+            <table class="staff-table">
+                <thead>
+                    <tr>
+                        <th>Startup Name</th>
+                        <th>Regd. Name</th>
+                        <th>Type</th>
+                        <th>Website</th>
+                        <th>CIN</th>
+                        <th>Date of CIN</th>
+                        <th>DPIIT No</th>
+                        <th>DPIIT Joining Date</th>
+                        <th>PAN</th>
+                        <th>GST</th>
+                        <th>Founders</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>LinkedIn</th>
+                        <th>Women Founder</th>
+                        <th>Bank Details</th>
+                        <th>Regd. Address</th>
+                        <th>One-Page Report</th>
+                        <th>Report Date</th>
+                        <th>Patent</th>
+                        <th>Incubation Agreement</th>
+                    </tr>
+                </thead>
+                <tbody id="startup-data-table-body">
+                    <!-- Startup data will be rendered here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <button id="download-staff-screenshot-btn" class="w-full py-2 px-6 rounded-lg shadow-md mt-6 font-semibold text-base back-btn btn-hover transition duration-300">
+            Download Screenshot
+        </button>
+    </div>
+
+
+    <!-- Screenshot Help Modal -->
+    <div id="screenshot-help-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-white rounded-lg p-6 shadow-xl max-w-sm w-full text-center relative">
+            <button id="close-screenshot-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-800 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">How to Get This View as an Image</h3>
+            <p class="text-gray-700 mb-4">To get this "preview image," you can use your computer's built-in screenshot tool:</p>
+            <ul class="text-left text-sm text-gray-600 list-disc list-inside space-y-1">
+                <li>**Windows:** Press `Windows key + Shift + S` or use the Snipping Tool.</li>
+                <li>**macOS:** Press `Shift + Command + 4` (then drag to select the area).</li>
+                <li>**Browser (Chrome/Firefox):** Right-click on the page and select "Screenshot" or "Take a screenshot".</li>
+            </ul>
+            <p class="text-gray-700 mt-4">Once you take the screenshot, you can save it as an image file on your computer.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const roleSelectionScreen = document.getElementById('role-selection-screen'); // Initial screen
+            const credentialInputScreen = document.getElementById('credential-input-screen'); // Intermediate screen
+            const studentDashboard = document.getElementById('student-dashboard');
+            const startupDashboard = document.getElementById('startup-dashboard');
+            const staffDashboard = document.getElementById('staff-dashboard');
+
+            const selectStudentRoleBtn = document.getElementById('select-student-role-btn');
+            const selectStartupRoleBtn = document.getElementById('select-startup-role-btn');
+            const selectStaffRoleBtn = document.getElementById('select-staff-role-btn');
+            const backToRolesBtn = document.getElementById('back-to-roles-btn');
+
+            const credentialScreenTitle = document.getElementById('credential-screen-title');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const credentialSubmitBtn = document.getElementById('credential-submit-btn');
+            const credentialLoginError = document.getElementById('credential-login-error');
+
+            const studentLogoutBtn = document.getElementById('student-logout-btn');
+            const startupLogoutBtn = document.getElementById('startup-logout-btn');
+            const staffLogoutBtn = document.getElementById('staff-logout-btn');
+
+            const downloadInitialScreenshotBtn = document.getElementById('download-initial-screenshot-btn');
+            const downloadCredentialScreenshotBtn = document.getElementById('download-credential-screenshot-btn');
+            const downloadStudentScreenshotBtn = document.getElementById('download-student-screenshot-btn');
+            const downloadStartupScreenshotBtn = document.getElementById('download-startup-screenshot-btn');
+            const downloadStaffScreenshotBtn = document.getElementById('download-staff-screenshot-btn');
+
+            const screenshotHelpModal = document.getElementById('screenshot-help-modal');
+            const closeScreenshotModalBtn = document.getElementById('close-screenshot-modal');
+            const staffWelcomeMessage = document.getElementById('staff-welcome-message');
+            const startupDataTableBody = document.getElementById('startup-data-table-body');
+
+            let currentSelectedRole = ''; // Variable to store the selected role
+
+            // Hardcoded User Credentials
+            const users = {
+                'sohaib': { password: 'tbi123@', role: 'student', name: 'Sohaib' },
+                'andhraangels': { password: 'tbi123@', role: 'startup', name: 'Andhra Angels' },
+                'sandeep.s': { password: 'tbi123@', role: 'staff', name: 'CEO Sandeep S' },
+                'abdul.riyaz': { password: 'tbi123@', role: 'staff', name: 'Incubation Manager Abdul Riyaz' }
+            };
+
+            // Hardcoded Startup Data (as per previous definition)
+            const startupsData = [
+                {
+                    name: "VFSTR Pvt. Ltd.",
+                    regdName: "Vignan Future Solutions & Technologies Pvt. Ltd.",
+                    type: "Physical",
+                    website: "https://vfstr.com",
+                    cin: "U72200TG2023PTC123456",
+                    dateOfCin: "2023-01-15",
+                    dpiitNo: "S/2023/DPIIT/7890",
+                    joiningDateDpiit: "2023-03-01",
+                    pan: "ABCDE1234F",
+                    gst: "36ABCDE1234F1Z5",
+                    founders: [
+                        { name: "Founder One", percentage: "40%", photo: "https://placehold.co/50x50/A6FB00/ffffff?text=F1" },
+                        { name: "Founder Two", percentage: "30%", photo: "https://placehold.co/50x50/F5B700/ffffff?text=F2" },
+                        { name: "Founder Three", percentage: "30%", photo: "https://placehold.co/50x50/00E099/ffffff?text=F3" }
+                    ],
+                    phone: "+91 9876543210",
+                    email: "info@vfstr.com",
+                    linkedin: "https://linkedin.com/company/vfstr",
+                    isWomenFounderStartup: "No",
+                    bankDetails: "SBI, A/C: 1234567890, IFSC: SBIN0001234",
+                    regdAddress: "Vignan's LARA Campus, Vadlamudi, Guntur, AP - 522213",
+                    onePageReport: "Submitted",
+                    onePageReportDate: "2024-05-20",
+                    patent: "Pending (Application No. 2024110XXXXX)",
+                    incubationAgreement: "Signed (View Document)"
+                },
+                {
+                    name: "Andhra Angels",
+                    regdName: "Andhra Angels AgriTech Innovations Pvt. Ltd.",
+                    type: "Physical",
+                    website: "https://andhraangels.in",
+                    cin: "U01110AP2022PTC098765",
+                    dateOfCin: "2022-07-20",
+                    dpiitNo: "S/2022/DPIIT/1234",
+                    joiningDateDpiit: "2022-09-10",
+                    pan: "FGHIJ5678K",
+                    gst: "37FGHIJ5678K1Z6",
+                    founders: [
+                        { name: "Jane Doe", percentage: "50%", photo: "https://placehold.co/50x50/FF3D3D/ffffff?text=JD" },
+                        { name: "John Smith", percentage: "50%", photo: "https://placehold.co/50x50/7B00F5/ffffff?text=JS" }
+                    ],
+                    phone: "+91 7654321098",
+                    email: "contact@andhraangels.in",
+                    linkedin: "https://linkedin.com/company/andhra-angels",
+                    isWomenFounderStartup: "Yes",
+                    bankDetails: "ICICI Bank, A/C: 9876543210, IFSC: ICIC0005678",
+                    regdAddress: "TBI Incubation Center, Guntur, AP - 522001",
+                    onePageReport: "Submitted",
+                    onePageReportDate: "2024-04-10",
+                    patent: "Granted (Patent No. IN202300XXXX)",
+                    incubationAgreement: "Signed (View Document)"
+                },
+                {
+                    name: "EcoHarvest",
+                    regdName: "EcoHarvest Sustainable Tech LLP",
+                    type: "Virtual",
+                    website: "https://ecoharvest.org",
+                    cin: "AAO-1234", // LLPIN for LLPs
+                    dateOfCin: "2023-02-01",
+                    dpiitNo: "S/2023/DPIIT/5432",
+                    joiningDateDpiit: "2023-04-15",
+                    pan: "KLMNO9876P",
+                    gst: "07KLMNO9876P1Z7",
+                    founders: [
+                        { name: "Sarah Khan", percentage: "60%", photo: "https://placehold.co/50x50/00A6FB/ffffff?text=SK" },
+                        { name: "David Lee", percentage: "40%", photo: "https://placehold.co/50x50/00E099/ffffff?text=DL" }
+                    ],
+                    phone: "+91 8888877777",
+                    email: "hello@ecoharvest.org",
+                    linkedin: "https://linkedin.com/company/ecoharvest",
+                    isWomenFounderStartup: "Yes",
+                    bankDetails: "HDFC Bank, A/C: 4567890123, IFSC: HDFC0009876",
+                    regdAddress: "Online Operations, Bangalore, KA - 560001",
+                    onePageReport: "Pending",
+                    onePageReportDate: "N/A",
+                    patent: "N/A",
+                    incubationAgreement: "Pending Review"
+                }
+            ];
+
+
+            // Function to switch screens and update background
+            function showScreen(screenId, userName = '') {
+                // Hide all screens first
+                roleSelectionScreen.classList.add('hidden');
+                credentialInputScreen.classList.add('hidden');
+                studentDashboard.classList.add('hidden');
+                startupDashboard.classList.add('hidden');
+                staffDashboard.classList.add('hidden');
+                
+                // Set default background for dashboards (no gradient)
+                document.body.classList.remove('login-bg-gradient'); 
+                document.body.style.backgroundColor = '#F4F7F9';
+
+                // Show the requested screen and adjust background as needed
+                if (screenId === 'role-selection-screen') {
+                    roleSelectionScreen.classList.remove('hidden');
+                    document.body.classList.add('login-bg-gradient'); // Apply gradient for this screen
+                    document.body.style.backgroundColor = ''; // Let CSS gradient take over
+                    usernameInput.value = ''; // Clear inputs
+                    passwordInput.value = '';
+                    credentialLoginError.classList.add('hidden');
+                } else if (screenId === 'credential-input-screen') {
+                    credentialInputScreen.classList.remove('hidden');
+                    credentialScreenTitle.textContent = `Login as ${currentSelectedRole.charAt(0).toUpperCase() + currentSelectedRole.slice(1)}`;
+                    usernameInput.value = ''; 
+                    passwordInput.value = '';
+                    credentialLoginError.classList.add('hidden');
+                    document.body.classList.add('login-bg-gradient'); // Keep gradient for login screen
+                    document.body.style.backgroundColor = '';
+                } else if (screenId === 'student-dashboard') {
+                    studentDashboard.classList.remove('hidden');
+                } else if (screenId === 'startup-dashboard') {
+                    startupDashboard.classList.remove('hidden');
+                } else if (screenId === 'staff-dashboard') {
+                    staffDashboard.classList.remove('hidden');
+                    staffWelcomeMessage.textContent = `Welcome, ${userName}!`;
+                    renderStartupTable();
+                }
+            }
+
+            // Render Startup Data Table for Staff
+            function renderStartupTable() {
+                startupDataTableBody.innerHTML = ''; // Clear existing rows
+                startupsData.forEach(startup => {
+                    const row = document.createElement('tr');
+                    
+                    // Founders details with photos
+                    const foundersCell = `
+                        <div class="flex flex-col space-y-1">
+                            ${startup.founders.map(founder => `
+                                <div class="founder-info">
+                                    <img src="${founder.photo}" alt="${founder.name}" class="founder-photo">
+                                    <span>${founder.name} (${founder.percentage})</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                    row.innerHTML = `
+                        <td>${startup.name}</td>
+                        <td>${startup.regdName}</td>
+                        <td>${startup.type}</td>
+                        <td><a href="${startup.website}" target="_blank" class="document-link">${startup.website.replace('https://', '')}</a></td>
+                        <td>${startup.cin}</td>
+                        <td>${startup.dateOfCin}</td>
+                        <td>${startup.dpiitNo}</td>
+                        <td>${startup.joiningDateDpiit}</td>
+                        <td>${startup.pan}</td>
+                        <td>${startup.gst}</td>
+                        <td>${foundersCell}</td>
+                        <td>${startup.phone}</td>
+                        <td>${startup.email}</td>
+                        <td><a href="${startup.linkedin}" target="_blank" class="document-link">LinkedIn Profile</a></td>
+                        <td>${startup.isWomenFounderStartup}</td>
+                        <td>${startup.bankDetails}</td>
+                        <td>${startup.regdAddress}</td>
+                        <td>${startup.onePageReport === 'Submitted' ? `<span class="document-link" onclick="alert('One-Page Report: (Placeholder Document)')">View</span>` : startup.onePageReport}</td>
+                        <td>${startup.onePageReportDate}</td>
+                        <td>${startup.patent === 'N/A' ? 'N/A' : `<span class="document-link" onclick="alert('Patent Document: (Placeholder Document)')">${startup.patent}</span>`}</td>
+                        <td>${startup.incubationAgreement === 'Signed (View Document)' ? `<span class="document-link" onclick="alert('Incubation Agreement: (Placeholder Document)')">View</span>` : startup.incubationAgreement}</td>
+                    `;
+                    startupDataTableBody.appendChild(row);
+                });
+            }
+
+
+            // Initial load: show role selection screen
+            showScreen('role-selection-screen');
+
+            // Role Selection Button Event Listeners
+            selectStudentRoleBtn.addEventListener('click', () => {
+                currentSelectedRole = 'student';
+                showScreen('credential-input-screen');
+            });
+            selectStartupRoleBtn.addEventListener('click', () => {
+                currentSelectedRole = 'startup';
+                showScreen('credential-input-screen');
+            });
+            selectStaffRoleBtn.addEventListener('click', () => {
+                currentSelectedRole = 'staff';
+                showScreen('credential-input-screen');
+            });
+
+            // Credential Input Submit Button
+            credentialSubmitBtn.addEventListener('click', () => {
+                const enteredUsername = usernameInput.value.toLowerCase().trim();
+                const enteredPassword = passwordInput.value.trim();
+
+                const user = users[enteredUsername];
+
+                // Check if user exists and password matches AND role matches
+                if (user && user.password === enteredPassword && user.role === currentSelectedRole) {
+                    credentialLoginError.classList.add('hidden');
+                    const userNameForDisplay = user.name || enteredUsername; // Use stored name or username
+
+                    if (currentSelectedRole === 'student') {
+                        showScreen('student-dashboard', userNameForDisplay);
+                    } else if (currentSelectedRole === 'startup') {
+                        showScreen('startup-dashboard', userNameForDisplay);
+                    } else if (currentSelectedRole === 'staff') {
+                        showScreen('staff-dashboard', userNameForDisplay);
+                    }
+                } else {
+                    credentialLoginError.classList.remove('hidden');
+                }
+            });
+
+            // Back to Roles Button
+            backToRolesBtn.addEventListener('click', () => {
+                showScreen('role-selection-screen');
+            });
+
+            // Logout Button Event Listeners (all logouts return to role selection)
+            studentLogoutBtn.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            startupLogoutBtn.addEventListener('click', () => { showScreen('role-selection-screen'); });
+            staffLogoutBtn.addEventListener('click', () => { showScreen('role-selection-screen'); });
+
+            // Screenshot Button Event Listeners
+            downloadInitialScreenshotBtn.addEventListener('click', () => { screenshotHelpModal.classList.remove('hidden'); });
+            downloadCredentialScreenshotBtn.addEventListener('click', () => { screenshotHelpModal.classList.remove('hidden'); });
+            downloadStudentScreenshotBtn.addEventListener('click', () => { screenshotHelpModal.classList.remove('hidden'); });
+            downloadStartupScreenshotBtn.addEventListener('click', () => { screenshotHelpModal.classList.remove('hidden'); });
+            downloadStaffScreenshotBtn.addEventListener('click', () => { screenshotHelpModal.classList.remove('hidden'); });
+
+            // Close Screenshot Modal
+            closeScreenshotModalBtn.addEventListener('click', () => { screenshotHelpModal.classList.add('hidden'); });
+        });
+    </script>
+</body>
+</html>
